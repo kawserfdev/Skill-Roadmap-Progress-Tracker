@@ -58,10 +58,10 @@ class MyApp extends StatelessWidget {
           error: const Color(0xFFDC2626),
         ),
         textTheme: const TextTheme(
-          headline6: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-          subtitle1: TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
-          caption: TextStyle(fontSize: 12.0, color: Colors.grey),
-          bodyText2: TextStyle(fontSize: 14.0),
+          headlineLarge: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          bodyLarge: TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
+          bodyMedium: TextStyle(fontSize: 12.0, color: Colors.grey),
+          headlineMedium: TextStyle(fontSize: 14.0),
         ),
         chipTheme: ChipThemeData(
           backgroundColor: Colors.grey[200],
