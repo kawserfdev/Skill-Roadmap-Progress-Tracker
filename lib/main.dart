@@ -1,122 +1,134 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; // Import provider
+import 'models/roadmap_models.dart';
+import 'state/roadmap_state.dart'; // Import RoadmapManager
+import 'widgets/roadmap_part_card.dart';
+
+// Sample Data - moved here to be accessible by RoadmapManager initialization
+final RoadmapPart samplePart1 = RoadmapPart(
+  id: 'part1',
+  name: '🧱 Part 1: Fundamentals of Dart Programming',
+  description: 'Dart is an object-oriented, class-based, garbage-collected language developed by Google.',
+  topics: [
+    Topic(id: 'dart-basics', name: 'Dart Basics', skills: [
+      SkillItem(id: 'variables', name: 'Variables and Data Types', description: 'var, final, const, late, and basic types like int, double, String, bool, dynamic', isRequired: true, status: SkillStatus.notStarted),
+      SkillItem(id: 'operators', name: 'Operators', description: 'Arithmetic, relational, logical, bitwise, assignment, null-aware operators', isRequired: true, status: SkillStatus.inProgress),
+    ]),
+    Topic(id: 'collections', name: 'Collections', skills: [
+      SkillItem(id: 'lists', name: 'Lists', description: 'Creating and manipulating lists, spread operator, collection if/for', isRequired: true, status: SkillStatus.complete),
+      SkillItem(id: 'sets', name: 'Sets', description: 'Creating sets, operations like union and intersection', isRequired: false, status: SkillStatus.notStarted),
+    ]),
+  ]
+);
+
+final RoadmapPart samplePart2 = RoadmapPart(
+  id: 'part2',
+  name: '🚀 Part 2: Flutter Basics',
+  description: 'Flutter is Google\'s UI toolkit for crafting natively compiled applications for mobile, web, and desktop from a single codebase.',
+  topics: [
+    Topic(id: 'flutter-sdk', name: 'Flutter SDK & Development Environment', skills: [
+      SkillItem(id: 'install-flutter', name: 'Install Flutter SDK', description: 'Setting up the Flutter SDK on your development machine', isRequired: true, status: SkillStatus.notStarted),
+    ]),
+  ]
+);
+
+final List<RoadmapPart> initialSampleRoadmap = [samplePart1, samplePart2];
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => RoadmapManager(initialParts: initialSampleRoadmap),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Skill Tracker',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(
+          error: const Color(0xFFDC2626),
+        ),
+        textTheme: const TextTheme(
+          headline6: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          subtitle1: TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
+          caption: TextStyle(fontSize: 12.0, color: Colors.grey),
+          bodyText2: TextStyle(fontSize: 14.0),
+        ),
+        chipTheme: ChipThemeData(
+          backgroundColor: Colors.grey[200],
+          labelStyle: const TextStyle(fontSize: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+        )
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const RoadmapPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class RoadmapPage extends StatelessWidget {
+  const RoadmapPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    // Access RoadmapManager here. Data is now sourced from it.
+    // The actual list of parts will be consumed by widgets further down if needed,
+    // or directly here if RoadmapPage itself displays parts.
+    // For now, the ListView.builder will get data from Provider.
+
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: const Text('Flutter Developer Roadmap'),
+        // Placeholder for overall progress if needed in app bar
+        // actions: [
+        //   Consumer<RoadmapManager>(
+        //     builder: (context, manager, child) {
+        //       final progress = manager.calculateOverallProgress();
+        //       return Center(
+        //         child: Padding(
+        //           padding: const EdgeInsets.only(right: 16.0),
+        //           child: Text("Overall: ${(progress * 100).toStringAsFixed(0)}%"),
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // ],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+      // Step 4: Basic UI for Controls (Placeholder)
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(onPressed: () {/* TODO: Import */}, child: const Text("Import")),
+            ElevatedButton(onPressed: () {/* TODO: Export */}, child: const Text("Export")),
+            ElevatedButton(onPressed: () {/* TODO: Reset */}, child: const Text("Reset")),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: Consumer<RoadmapManager>( // Use Consumer to get roadmap data
+        builder: (context, roadmapManager, child) {
+          if (roadmapManager.roadmapParts.isEmpty) {
+            return const Center(child: Text("No roadmap data loaded."));
+          }
+          return ListView.builder(
+            itemCount: roadmapManager.roadmapParts.length,
+            itemBuilder: (context, index) {
+              final part = roadmapManager.roadmapParts[index];
+              // Pass the part itself, RoadmapPartCard will use Provider for manager if needed for actions
+              return RoadmapPartCard(part: part);
+            },
+          );
+        },
+      ),
     );
   }
 }
