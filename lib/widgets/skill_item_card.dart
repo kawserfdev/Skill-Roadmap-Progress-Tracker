@@ -24,9 +24,7 @@ class SkillItemCard extends StatelessWidget {
         return "In Progress";
       case SkillStatus.complete:
         return "Complete";
-      default:
-        return "";
-    }
+      }
   }
 
   // Helper for status badge/dropdown indicator color
@@ -38,18 +36,11 @@ class SkillItemCard extends StatelessWidget {
         return Colors.orange[400]!;
       case SkillStatus.complete:
         return Colors.green[400]!;
-      default:
-        return Colors.grey;
-    }
+      }
   }
 
   @override
   Widget build(BuildContext context) {
-    // Access RoadmapManager for actions, listen: false as the card itself rebuilds via parent if skill data changes.
-    // SkillItem's own data (name, desc, status) is passed directly.
-    // The Consumer/Provider.of in RoadmapPartCard will trigger rebuilds of SkillItemCard if the skill object itself changes instance
-    // or if the list of skills changes. Direct status change on the DropdownButton will update RoadmapManager,
-    // which then notifies listeners, leading to RoadmapPartCard rebuilding and thus SkillItemCard rebuilding with new skill status.
     final roadmapManager = Provider.of<RoadmapManager>(context, listen: false);
 
     return Card(
@@ -71,7 +62,7 @@ class SkillItemCard extends StatelessWidget {
                       Flexible( // Ensure text wraps if too long
                         child: Text(
                           skill.name,
-                          style: Theme.of(context).textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(width: 8), // Spacing between title and chip
@@ -97,7 +88,7 @@ class SkillItemCard extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 6.0), // Increased top padding
                       child: Text(
                         skill.description,
-                        style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.grey[600], fontSize: 13), // Slightly smaller desc
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey[600], fontSize: 13), // Slightly smaller desc
                       ),
                     ),
                 ],
@@ -107,7 +98,7 @@ class SkillItemCard extends StatelessWidget {
             DropdownButton<SkillStatus>(
               value: skill.status, // Current status from the skill model
               icon: Icon(Icons.arrow_drop_down, color: _getStatusColor(skill.status, context)),
-              style: TextStyle(fontSize: 12, color: Theme.of(context).textTheme.bodyText1?.color ?? Colors.black),
+              style: TextStyle(fontSize: 12, color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black),
               underline: Container( // Custom underline with status color
                 height: 2,
                 color: _getStatusColor(skill.status, context).withOpacity(0.7),
@@ -123,7 +114,7 @@ class SkillItemCard extends StatelessWidget {
                   value: status,
                   child: Text(
                     _statusText(status),
-                     style: TextStyle(color: _getStatusColor(status, context).shade700, fontWeight: FontWeight.w500),
+                     style: TextStyle(color: _getStatusColor(status, context).withOpacity(0.9), fontWeight: FontWeight.w500),
                   ),
                 );
               }).toList(),

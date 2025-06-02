@@ -43,9 +43,7 @@ class SkillItemView extends ConsumerWidget {
         return Colors.orange[400]!;
       case SkillStatus.completed:
         return Colors.green[400]!;
-      default:
-        return Colors.grey;
-    }
+      }
   }
 
   @override
@@ -64,21 +62,21 @@ class SkillItemView extends ConsumerWidget {
                 children: [
                   Text(
                     skill.name,
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   if (skill.description.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(top: 4.0),
                       child: Text(
                         skill.description,
-                        style: Theme.of(context).textTheme.caption?.copyWith(fontSize: 13.0),
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 13.0),
                       ),
                     ),
                   Padding(
                     padding: const EdgeInsets.only(top: 6.0),
                     child: Text(
                       'Priority: ${_priorityText(skill.priority)}',
-                      style: Theme.of(context).textTheme.caption?.copyWith(
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontStyle: FontStyle.italic,
                         fontSize: 12.0,
                         color: skill.priority == SkillPriority.mustLearn ? Colors.red.shade700 : Colors.blueGrey.shade700,
@@ -111,7 +109,7 @@ class SkillItemView extends ConsumerWidget {
                   value: status,
                   child: Text(
                     _statusText(status),
-                    style: TextStyle(color: _getStatusColor(status, context).shade900.withOpacity(0.8), fontWeight: FontWeight.w500, fontSize: 12),
+                    style: TextStyle(color: _getStatusColor(status, context).withOpacity(0.8), fontWeight: FontWeight.w500, fontSize: 12),
                   ),
                 );
               }).toList(),

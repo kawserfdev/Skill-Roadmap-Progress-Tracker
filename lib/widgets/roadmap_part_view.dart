@@ -37,7 +37,7 @@ class _RoadmapPartViewState extends State<RoadmapPartView> {
               children: [
                 Text(
                   widget.part.title,
-                  style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.w600),
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 4), // Spacing
                 Row(
@@ -53,7 +53,7 @@ class _RoadmapPartViewState extends State<RoadmapPartView> {
                     const SizedBox(width: 8),
                     Text(
                       "${(widget.part.progress * 100).toStringAsFixed(0)}%",
-                      style: Theme.of(context).textTheme.caption?.copyWith(fontSize: 12, fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -62,7 +62,7 @@ class _RoadmapPartViewState extends State<RoadmapPartView> {
             subtitle: widget.part.description.isNotEmpty
                 ? Padding(
                     padding: const EdgeInsets.only(top: 8.0), // Add padding above description
-                    child: Text(widget.part.description, style: Theme.of(context).textTheme.caption?.copyWith(fontSize: 13)),
+                    child: Text(widget.part.description, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 13)),
                   )
                 : null,
             trailing: IconButton(
@@ -97,7 +97,7 @@ class _RoadmapPartViewState extends State<RoadmapPartView> {
                   if (widget.part.sections.isEmpty)
                     Text(
                       "No sections defined for this part yet.",
-                       style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.grey[600]),
+                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
                     ),
                 ],
               ),

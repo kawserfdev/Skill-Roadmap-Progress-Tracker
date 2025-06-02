@@ -21,14 +21,14 @@ class SectionView extends StatelessWidget {
         children: [
           Text(
             section.name,
-            style: Theme.of(context).textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold, fontSize: 17),
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, fontSize: 17),
           ),
           if (section.description.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
               child: Text(
                 section.description,
-                style: Theme.of(context).textTheme.caption?.copyWith(fontSize: 13.5),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 13.5),
               ),
             ),
           if (section.description.isNotEmpty) const SizedBox(height: 4),

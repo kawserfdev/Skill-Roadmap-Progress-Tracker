@@ -13,33 +13,45 @@ class MainLayout extends ConsumerWidget {
     final List<RoadmapPart> roadmapData = ref.watch(filteredRoadmapProvider);
     final double overallProgress = ref.watch(overallProgressProvider);
     final String currentSearchQuery = ref.watch(searchQueryProvider);
-    final TextEditingController searchController = TextEditingController(text: currentSearchQuery);
+    final TextEditingController searchController = TextEditingController(
+      text: currentSearchQuery,
+    );
     // Ensure cursor is at the end if there's text
-    searchController.selection = TextSelection.fromPosition(TextPosition(offset: searchController.text.length));
-
+    searchController.selection = TextSelection.fromPosition(
+      TextPosition(offset: searchController.text.length),
+    );
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
         // Step 1: Add Search Bar UI
         title: Container(
-          height: 40, // Consistent height for the search bar area
+          height: 40,
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.15),
+            // color: Colors.white.withOpacity(0.15),
             borderRadius: BorderRadius.circular(8),
           ),
           child: TextField(
             controller: searchController,
             autofocus: false, // Set to true if you want it to focus on load
-            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimary,
+              fontSize: 16,
+            ),
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search, color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7)),
+              prefixIcon: Icon(Icons.search, color: Colors.grey[400]),
               hintText: "Search skills, sections, parts...",
-              hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7), fontSize: 16),
+              hintStyle: TextStyle(color: Colors.grey[400], fontSize: 16),
               border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(vertical: 12.0), // Adjust vertical padding
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 12.0,
+              ), // Adjust vertical padding
               suffixIcon: currentSearchQuery.isNotEmpty
                   ? IconButton(
-                      icon: Icon(Icons.clear, color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7)),
+                      icon: Icon(
+                        Icons.clear,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                       onPressed: () {
                         searchController.clear();
                         ref.read(searchQueryProvider.notifier).state = '';
@@ -56,14 +68,19 @@ class MainLayout extends ConsumerWidget {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(20.0),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 4.0,
+            ),
             child: Row(
               children: [
                 Expanded(
                   child: LinearProgressIndicator(
                     value: overallProgress,
                     backgroundColor: Colors.white.withOpacity(0.3),
-                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.onPrimary.withOpacity(0.9)),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
+                    ),
                     minHeight: 6,
                   ),
                 ),
