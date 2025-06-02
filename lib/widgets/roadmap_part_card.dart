@@ -48,14 +48,14 @@ class _RoadmapPartCardState extends State<RoadmapPartCard> {
                       children: [
                         Text(
                           widget.part.name,
-                          style: Theme.of(context).textTheme.headlineLarge,
+                          style: Theme.of(context).textTheme.headline6,
                         ),
                         if (widget.part.description.isNotEmpty)
                           Padding(
                             padding: const EdgeInsets.only(top: 4.0),
                             child: Text(
                               widget.part.description,
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: Theme.of(context).textTheme.caption,
                             ),
                           ),
                       ],
@@ -72,7 +72,7 @@ class _RoadmapPartCardState extends State<RoadmapPartCard> {
                         ),
                       ),
                       const SizedBox(height: 4),
-                      Text("$progressPercent%", style: Theme.of(context).textTheme.bodyMedium), // Display calculated progress
+                      Text("$progressPercent%", style: Theme.of(context).textTheme.caption), // Display calculated progress
                     ],
                   ),
                   Icon(
@@ -93,7 +93,7 @@ class _RoadmapPartCardState extends State<RoadmapPartCard> {
                       padding: const EdgeInsets.only(top: 12.0, bottom: 4.0), // Add some spacing for topic name
                       child: Text(
                         topic.name,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600), // Slightly bolder
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(fontWeight: FontWeight.w600), // Slightly bolder
                       ),
                     ),
                     // Pass the skill to SkillItemCard. SkillItemCard will handle its own state/interactions.
